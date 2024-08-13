@@ -13,12 +13,20 @@ function App() {
       const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
       const formattedDate = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
-      const formattedTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  
+      // Extract hour, minute, and AM/PM
+      const hours12 = dateObj.getHours() % 12 || 12;
+      const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+      const ampm = dateObj.getHours() >= 12 ? 'pm' : 'am';
+  
+      // Construct formatted time
+      const formattedTime = `${hours12}:${minutes} ${ampm}`;
+  
       return { date: formattedDate, time: formattedTime };
     } else {
       // Handle case where localtime is undefined
       console.error("localtime is undefined");
-      return { date: '', time: '' }; 
+      return { date: '', time: '' };
     }
   }
 
